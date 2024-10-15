@@ -5,14 +5,14 @@ import React from "react";
 
 const Header = () => {
   return (
-    <div className="py-5 px-5 md:px-12 lg:px-28">
+    <div className="bg-gray-100 py-5 px-5 md:px-12 lg:px-28">
       <div className="flex justify-between items-center">
         {/* Logo */}
         <Link
           href="/"
-          className="text-lg md:text-2xl font-medium text-[#ff0000] font-serif tracking-widest uppercase 
-        hover:cursor-pointer underline underline-offset-4 
-        decoration-4 decoration-dotted"
+          className="text-lg md:text-2xl font-medium text-black font-serif tracking-widest uppercase 
+     hover:cursor-pointer underline underline-offset-4
+     decoration-4 decoration-dotted"
         >
           Patnaites News
         </Link>
@@ -37,7 +37,7 @@ const Header = () => {
             name="email"
             id="email"
             placeholder="Enter your email"
-            className="pl-4 outline-none"
+            className="pl-4 w-full outline-none"
           />
           <button
             type="submit"

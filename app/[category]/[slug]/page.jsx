@@ -1,5 +1,6 @@
 "use client";
 import { blog_data, assets } from "@/assets/assets";
+import Footer from "@/components/Footer";
 import moment from "moment";
 import Image from "next/image";
 import Link from "next/link";
@@ -76,7 +77,47 @@ const Page = ({ params }) => {
           </span>
         </div>
         <p>{post.description}</p>
+        <h3 className="my-5 text-[18px] font-semibold">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum, at!
+        </h3>
+        <p className="my-3">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum, at!
+          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Atque
+        </p>
+        <p className="my-3">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum, at!
+          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Atque
+        </p>
+        <h3 className="my-5 text-[18px] font-semibold">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum, at!
+        </h3>
+        <p className="my-3">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum, at!
+          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Atque
+        </p>
+        <p className="my-3">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum, at!
+          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Atque
+        </p>
+        <h3 className="my-5 text-[18px] font-semibold">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum, at!
+        </h3>
+        <p className="my-3">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum, at!
+          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Atque
+        </p>
+        <div className="my-24">
+          <p className="font-semibold my-4">
+            Share this news on your social media.
+            <div className="flex">
+              <Image src={assets.facebook_icon} alt="facebook" width={50} />
+              <Image src={assets.twitter_icon} alt="twitter" width={50} />
+              <Image src={assets.googleplus_icon} alt="googleplus" width={50} />
+            </div>
+          </p>
+        </div>
       </div>
+      <Footer />
     </>
   );
 };
