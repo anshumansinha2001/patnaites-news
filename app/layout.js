@@ -8,7 +8,24 @@ const outfit = Outfit({
 
 export const metadata = {
   title: "Patnaites News",
-  description: "A news portal for Patnaites.",
+  description: "Stay updated with the latest news from Patnaites News.",
+  openGraph: {
+    type: "website",
+    title: "Patnaites News",
+    description: "Stay updated with the latest news from Patnaites News.",
+    images: ["/path-to-your-default-image.jpg"], // Add your default OG image
+    url: "https://patnaitesnews.vercel.app", // Your site's URL
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Patnaites News",
+    description: "Stay updated with the latest news from Patnaites News.",
+    images: ["/path-to-your-default-image.jpg"], // Default Twitter image
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
 };
 
 export default function RootLayout({ children }) {

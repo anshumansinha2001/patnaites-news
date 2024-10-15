@@ -11,13 +11,13 @@ const Header = () => {
         <Link
           href="/"
           className="text-lg md:text-2xl font-medium text-[#ff0000] font-serif tracking-widest uppercase 
-        hover:cursor-pointer underline underline-offset-8 
+        hover:cursor-pointer underline underline-offset-4 
         decoration-4 decoration-dotted"
         >
           Patnaites News
         </Link>
         {/* Get Started Button */}
-        <button className="flex items-center gap-2 font-medium py-1 px-3 sm:py-3 sm:px-6 border border-black border-solid shadow-[-7px_7px_0px_#ff0000] text-xs sm:text-base">
+        <button className="flex items-center gap-2 font-medium py-1 px-3 sm:py-3 sm:px-6 border border-black border-solid shadow-[-7px_7px_0px_#ff0000] text-xs sm:text-base active:bg-black active:text-white">
           Get Started <Image src={assets.arrow} alt="arrow" />
         </button>
       </div>

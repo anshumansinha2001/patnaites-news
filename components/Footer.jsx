@@ -10,7 +10,7 @@ const Footer = () => {
       <Link
         href="/"
         className="text-sm sm:text-lg font-medium font-serif tracking-widest uppercase 
-        hover:cursor-pointer underline underline-offset-8 
+        hover:cursor-pointer underline underline-offset-4 
         decoration-4 decoration-dotted"
       >
         Patnaites News
