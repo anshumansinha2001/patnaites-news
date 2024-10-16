@@ -1,33 +1,58 @@
-"use client";
 import { blog_data, assets } from "@/assets/assets";
 import Footer from "@/components/Footer";
 import moment from "moment";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
 
-const Page = ({ params }) => {
-  const [post, setPost] = useState(null);
+export async function generateMetadata({ params }) {
+  // TODO: Add API call to get post data
+  const post = blog_data.find((post) => post.slug === params.slug);
 
-  const fetchNewspost = () => {
-    // TODO: Fetch news post from API
-    for (let i = 0; i < blog_data.length; i++) {
-      if (params.slug === blog_data[i].slug) {
-        setPost(blog_data[i]);
-        // console.log(blog_data[i]);
-        break;
-      }
-    }
+  if (!post) {
+    return {
+      title: "Post not found",
+      description: "The post you are looking for does not exist.",
+    };
+  }
+
+  return {
+    title: post.title,
+    description: post.description,
+    openGraph: {
+      title: post.title,
+      description: post.description,
+      images: [post.image || "/path-to-your-default-image.jpg"],
+      url: `https://patnaitesnews.vercel.app/${params.slug}`,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: post.title,
+      description: post.description,
+      images: [post.image || "/path-to-your-default-image.jpg"],
+    },
+    robots: {
+      index: true,
+      follow: true,
+    },
   };
+}
 
-  useEffect(() => {
-    fetchNewspost();
-  }, []);
+const Page = async ({ params }) => {
+  let post = null;
 
-  // Handle the case where post hasn't been fetched yet
+  // TODO: Add API call to get post data
+  for (let i = 0; i < blog_data.length; i++) {
+    if (params.slug === blog_data[i].slug) {
+      post = blog_data[i];
+      break;
+    }
+  }
+
+  // Handle the case where the post doesn't exist
   if (!post || !post.title) {
     return <p>POST NOT FOUND</p>;
   }
+
   return (
     <>
       <div className="bg-gray-100 py-5 px-5 md:px-12 lg:px-28">
@@ -36,8 +61,8 @@ const Page = ({ params }) => {
           <Link
             href="/"
             className="text-lg md:text-2xl font-medium text-black font-serif tracking-widest uppercase 
-     hover:cursor-pointer underline underline-offset-4
-     decoration-4 decoration-dotted"
+            hover:cursor-pointer underline underline-offset-4
+            decoration-4 decoration-dotted"
           >
             Patnaites News
           </Link>
@@ -59,6 +84,7 @@ const Page = ({ params }) => {
           </p>
         </div>
       </div>
+
       {/* Page Image */}
       <div className="mx-5 max-w-[800px] md:mx-auto mt-[-80px] mb-10">
         <Image
@@ -77,6 +103,7 @@ const Page = ({ params }) => {
           </span>
         </div>
         <p>{post.description}</p>
+        {/* Placeholder content */}
         <h3 className="my-5 text-[18px] font-semibold">
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum, at!
         </h3>
@@ -88,33 +115,17 @@ const Page = ({ params }) => {
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum, at!
           Lorem, ipsum dolor sit amet consectetur adipisicing elit. Atque
         </p>
-        <h3 className="my-5 text-[18px] font-semibold">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum, at!
-        </h3>
-        <p className="my-3">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum, at!
-          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Atque
-        </p>
-        <p className="my-3">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum, at!
-          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Atque
-        </p>
-        <h3 className="my-5 text-[18px] font-semibold">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum, at!
-        </h3>
-        <p className="my-3">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum, at!
-          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Atque
-        </p>
+
+        {/* Social sharing */}
         <div className="my-24">
-          <p className="font-semibold my-4">
+          <div className="font-semibold my-4">
             Share this news on your social media.
             <div className="flex">
               <Image src={assets.facebook_icon} alt="facebook" width={50} />
               <Image src={assets.twitter_icon} alt="twitter" width={50} />
               <Image src={assets.googleplus_icon} alt="googleplus" width={50} />
             </div>
-          </p>
+          </div>
         </div>
       </div>
       <Footer />
