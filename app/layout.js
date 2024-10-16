@@ -9,11 +9,14 @@ const outfit = Outfit({
 export const metadata = {
   title: "Patnaites News",
   description: "Stay updated with the latest news from Patnaites News.",
+  alternates: {
+    canonical: "https://patnaitesnews.vercel.app",
+  },
   openGraph: {
     type: "website",
     title: "Patnaites News",
     description: "Stay updated with the latest news from Patnaites News.",
-    images: ["/path-to-your-default-image.jpg"], // Add your default OG image
+    images: ["/path-to-your-default-image.jpg"],
     url: "https://patnaitesnews.vercel.app", // Your site's URL
   },
   twitter: {

@@ -5,7 +5,6 @@ import Image from "next/image";
 import Link from "next/link";
 
 export async function generateMetadata({ params }) {
-  // TODO: Add API call to get post data
   const post = blog_data.find((post) => post.slug === params.slug);
 
   if (!post) {
@@ -15,20 +14,40 @@ export async function generateMetadata({ params }) {
     };
   }
 
+  const absoluteImageUrl =
+    post.image?.src && post.image.src.startsWith("http")
+      ? post.image.src
+      : `https://patnaitesnews.vercel.app${
+          post.image.src || "/path-to-your-default-image.jpg"
+        }`;
+
   return {
-    title: post.title,
+    title: `${post.title} | Patnaites News`,
     description: post.description,
+    alternates: {
+      canonical: `https://patnaitesnews.vercel.app/${params.slug}`,
+    },
     openGraph: {
       title: post.title,
       description: post.description,
-      images: [post.image || "/path-to-your-default-image.jpg"],
       url: `https://patnaitesnews.vercel.app/${params.slug}`,
+      siteName: "Patnaites News",
+      type: "article",
+      publishedTime: moment(post.date).format("YYYY-MM-DD"),
+      images: [
+        {
+          url: absoluteImageUrl,
+          width: 800,
+          height: 600,
+          alt: post.title,
+        },
+      ],
     },
     twitter: {
       card: "summary_large_image",
       title: post.title,
       description: post.description,
-      images: [post.image || "/path-to-your-default-image.jpg"],
+      images: [absoluteImageUrl],
     },
     robots: {
       index: true,
@@ -44,6 +63,7 @@ const Page = async ({ params }) => {
   for (let i = 0; i < blog_data.length; i++) {
     if (params.slug === blog_data[i].slug) {
       post = blog_data[i];
+      console.log(post.image.src);
       break;
     }
   }
@@ -67,10 +87,10 @@ const Page = async ({ params }) => {
             Patnaites News
           </Link>
           <Link
-            href="/"
+            href="/report"
             className="flex items-center gap-2 font-medium py-1 px-3 sm:py-3 sm:px-6 border border-black border-solid shadow-[-7px_7px_0px_#000000] text-xs sm:text-base active:bg-[#ff0000] active:text-white"
           >
-            Return Home <Image src={assets.arrow} alt="arrow" />
+            Report <Image src={assets.arrow} alt="arrow" />
           </Link>
         </div>
 

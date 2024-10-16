@@ -6,11 +6,11 @@ import { FaFacebookF, FaInstagram, FaTwitter, FaYoutube } from "react-icons/fa";
 const Footer = () => {
   return (
     <div className="flex justify-around gap-4 sm:gap-0  bg-black text-white py-5  items-center">
-      <div className="flex gap-2 md:gap-4 justify-center items-center hover:text-white">
+      <div className="flex flex-col gap-2 justify-center items-start hover:text-white">
         {/* Logo */}
         <Link href="/">
           <Image
-            className="w-20 h-10 md:h-16 md:w-28 object-cover rounded-sm"
+            className="w-36 h-16 md:h-20 md:w-48 object-cover rounded-sm"
             src={assets.patnaites_logo}
             alt="logo"
           />
@@ -25,7 +25,7 @@ const Footer = () => {
       </div>
 
       <div className="flex flex-col gap-2">
-        <div className="grid grid-flow-col text-xl md:text-2xl">
+        <div className="flex justify-center gap-4 text-xl md:text-2xl">
           <Link href="https://www.facebook.com/patnaite" target="_blank">
             <FaFacebookF className="hover:text-blue-400" />
           </Link>
