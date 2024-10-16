@@ -17,7 +17,7 @@ import blog_pic_16 from "./blog_pic_16.png";
 import facebook_icon from "./facebook_icon.png";
 import googleplus_icon from "./googleplus_icon.png";
 import twitter_icon from "./twitter_icon.png";
-import profile_icon from "./profile_icon.png";
+import brand_icon from "./brand_logo.jpg";
 import logo from "./logo.png";
 import arrow from "./arrow.png";
 import logo_light from "./logo_light.png";
@@ -31,7 +31,7 @@ export const assets = {
   facebook_icon,
   googleplus_icon,
   twitter_icon,
-  profile_icon,
+  brand_icon,
   logo,
   arrow,
   logo_light,
@@ -53,7 +53,7 @@ export const blog_data = [
     date: Date.now(),
     category: "Lifestyle",
     author: "Alex Bennett",
-    author_img: profile_icon,
+    author_img: brand_icon,
   },
   {
     id: 2,
@@ -65,7 +65,7 @@ export const blog_data = [
     date: Date.now(),
     category: "Startup",
     author: "Alex Bennett",
-    author_img: profile_icon,
+    author_img: brand_icon,
   },
   {
     id: 3,
@@ -77,7 +77,7 @@ export const blog_data = [
     date: Date.now(),
     category: "Technology",
     author: "Alex Bennett",
-    author_img: profile_icon,
+    author_img: brand_icon,
   },
   {
     id: 4,
@@ -89,7 +89,7 @@ export const blog_data = [
     date: Date.now(),
     category: "Travel",
     author: "Alex Bennett",
-    author_img: profile_icon,
+    author_img: brand_icon,
   },
   {
     id: 5,
@@ -101,7 +101,7 @@ export const blog_data = [
     date: Date.now(),
     category: "Lifestyle",
     author: "Alex Bennett",
-    author_img: profile_icon,
+    author_img: brand_icon,
   },
   {
     id: 6,
@@ -113,7 +113,7 @@ export const blog_data = [
     date: Date.now(),
     category: "Startup",
     author: "Alex Bennett",
-    author_img: profile_icon,
+    author_img: brand_icon,
   },
   {
     id: 7,
@@ -125,7 +125,7 @@ export const blog_data = [
     date: Date.now(),
     category: "Technology",
     author: "Alex Bennett",
-    author_img: profile_icon,
+    author_img: brand_icon,
   },
   {
     id: 8,
@@ -137,7 +137,7 @@ export const blog_data = [
     date: Date.now(),
     category: "Lifestyle",
     author: "Alex Bennett",
-    author_img: profile_icon,
+    author_img: brand_icon,
   },
   {
     id: 9,
@@ -149,7 +149,7 @@ export const blog_data = [
     date: Date.now(),
     category: "Startup",
     author: "Alex Bennett",
-    author_img: profile_icon,
+    author_img: brand_icon,
   },
   {
     id: 10,
@@ -161,7 +161,7 @@ export const blog_data = [
     date: Date.now(),
     category: "Lifestyle",
     author: "Alex Bennett",
-    author_img: profile_icon,
+    author_img: brand_icon,
   },
   {
     id: 11,
@@ -173,7 +173,7 @@ export const blog_data = [
     date: Date.now(),
     category: "Startup",
     author: "Alex Bennett",
-    author_img: profile_icon,
+    author_img: brand_icon,
   },
   {
     id: 12,
@@ -185,7 +185,7 @@ export const blog_data = [
     date: Date.now(),
     category: "Technology",
     author: "Alex Bennett",
-    author_img: profile_icon,
+    author_img: brand_icon,
   },
   {
     id: 13,
@@ -197,7 +197,7 @@ export const blog_data = [
     date: Date.now(),
     category: "Startup",
     author: "Alex Bennett",
-    author_img: profile_icon,
+    author_img: brand_icon,
   },
   {
     id: 14,
@@ -209,7 +209,7 @@ export const blog_data = [
     date: Date.now(),
     category: "Lifestyle",
     author: "Alex Bennett",
-    author_img: profile_icon,
+    author_img: brand_icon,
   },
   {
     id: 15,
@@ -221,7 +221,7 @@ export const blog_data = [
     date: Date.now(),
     category: "Technology",
     author: "Alex Bennett",
-    author_img: profile_icon,
+    author_img: brand_icon,
   },
   {
     id: 16,
@@ -233,6 +233,6 @@ export const blog_data = [
     date: Date.now(),
     category: "Startup",
     author: "Alex Bennett",
-    author_img: profile_icon,
+    author_img: brand_icon,
   },
 ];

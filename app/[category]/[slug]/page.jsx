@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 export async function generateMetadata({ params }) {
+  // TODO: Add API call to get post data
   const post = blog_data.find((post) => post.slug === params.slug);
 
   if (!post) {
@@ -14,44 +15,50 @@ export async function generateMetadata({ params }) {
     };
   }
 
-  const absoluteImageUrl =
-    post.image?.src && post.image.src.startsWith("http")
-      ? post.image.src
-      : `https://patnaitesnews.vercel.app${
-          post.image.src || "/path-to-your-default-image.jpg"
-        }`;
+  // Construct metadata for the found post
+  const metaTitle = `${post.title}` || "Patnaites News";
+  const metaDescription =
+    post.description ||
+    "Stay updated with the latest news and events happening in Patna. Explore articles, interviews, and stories that matter to Patnaites.";
+  const imageUrl = post.image?.src || "/favicon.ico";
+  const canonicalUrl = `https://patnaitesnews.vercel.app/${
+    post.category || "uncategorized"
+  }/${post.slug}`;
 
   return {
-    title: `${post.title} | Patnaites News`,
-    description: post.description,
-    alternates: {
-      canonical: `https://patnaitesnews.vercel.app/${params.slug}`,
-    },
+    title: metaTitle,
+    description: metaDescription,
     openGraph: {
-      title: post.title,
-      description: post.description,
-      url: `https://patnaitesnews.vercel.app/${params.slug}`,
-      siteName: "Patnaites News",
-      type: "article",
-      publishedTime: moment(post.date).format("YYYY-MM-DD"),
+      type: "article", // Changed to article type for blog posts
+      url: `https://patnaitesnews.vercel.app/${post.category}/${post.slug}`,
+      title: metaTitle,
+      description: metaDescription,
+      alternates: {
+        canonical: canonicalUrl,
+      },
       images: [
         {
-          url: absoluteImageUrl,
+          url: imageUrl,
           width: 800,
           height: 600,
-          alt: post.title,
+          alt: metaTitle,
         },
       ],
     },
     twitter: {
       card: "summary_large_image",
-      title: post.title,
-      description: post.description,
-      images: [absoluteImageUrl],
-    },
-    robots: {
-      index: true,
-      follow: true,
+      domain: "patnaitesnews.vercel.app",
+      url: `https://patnaitesnews.vercel.app/${post.category}/${post.slug}`,
+      title: metaTitle,
+      description: metaDescription,
+      images: [
+        {
+          url: imageUrl,
+          width: 800,
+          height: 600,
+          alt: metaTitle,
+        },
+      ],
     },
   };
 }
@@ -63,14 +70,17 @@ const Page = async ({ params }) => {
   for (let i = 0; i < blog_data.length; i++) {
     if (params.slug === blog_data[i].slug) {
       post = blog_data[i];
-      console.log(post.image.src);
       break;
     }
   }
 
   // Handle the case where the post doesn't exist
   if (!post || !post.title) {
-    return <p>POST NOT FOUND</p>;
+    return (
+      <p className="text-center text-3xl flex justify-center items-center h-screen">
+        404 PAGE NOT FOUND
+      </p>
+    );
   }
 
   return (
