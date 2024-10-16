@@ -1,36 +1,50 @@
-import { blog_data, assets } from "@/assets/assets";
+import { assets } from "@/assets/assets";
 import Footer from "@/components/Footer";
+import axios from "axios";
 import moment from "moment";
 import Image from "next/image";
 import Link from "next/link";
+import parse from "html-react-parser";
 
 export async function generateMetadata({ params }) {
-  // TODO: Add API call to get post data
-  const post = blog_data.find((post) => post.slug === params.slug);
+  // Fetch article data using the slug for metadata generation
+  let article;
 
-  if (!post) {
+  try {
+    const response = await axios.get(
+      `${process.env.NEXT_PUBLIC_DOMAIN}/api/article`,
+      {
+        params: { slug: params.slug },
+      }
+    );
+    article = response.data.article;
+  } catch (error) {
+    console.error("Error fetching metadata:", error);
+  }
+
+  if (!article) {
     return {
       title: "Post not found",
-      description: "The post you are looking for does not exist.",
+      description: "The article you are looking for does not exist.",
     };
   }
 
-  // Construct metadata for the found post
-  const metaTitle = `${post.title}` || "Patnaites News";
+  // Construct metadata for the found article
+  const metaTitle = article.title || "Patnaites News";
   const metaDescription =
-    post.description ||
-    "Stay updated with the latest news and events happening in Patna. Explore articles, interviews, and stories that matter to Patnaites.";
-  const imageUrl = post.image?.src || "/favicon.ico";
+    article.description ||
+    "Stay updated with the latest news and events in Patna.";
+  const imageUrl = article.image || "/favicon.ico";
   const canonicalUrl = `https://patnaitesnews.vercel.app/${
-    post.category || "uncategorized"
-  }/${post.slug}`;
+    article.category || "uncategorized"
+  }/${article.slug}`;
 
   return {
     title: metaTitle,
     description: metaDescription,
     openGraph: {
-      type: "article", // Changed to article type for blog posts
-      url: `https://patnaitesnews.vercel.app/${post.category}/${post.slug}`,
+      type: "article",
+      url: canonicalUrl,
       title: metaTitle,
       description: metaDescription,
       alternates: {
@@ -47,8 +61,7 @@ export async function generateMetadata({ params }) {
     },
     twitter: {
       card: "summary_large_image",
-      domain: "patnaitesnews.vercel.app",
-      url: `https://patnaitesnews.vercel.app/${post.category}/${post.slug}`,
+      url: canonicalUrl,
       title: metaTitle,
       description: metaDescription,
       images: [
@@ -64,21 +77,29 @@ export async function generateMetadata({ params }) {
 }
 
 const Page = async ({ params }) => {
-  let post = null;
+  let article = null;
 
-  // TODO: Add API call to get post data
-  for (let i = 0; i < blog_data.length; i++) {
-    if (params.slug === blog_data[i].slug) {
-      post = blog_data[i];
-      break;
+  try {
+    const response = await axios.get(
+      `${process.env.NEXT_PUBLIC_DOMAIN}/api/article`,
+      {
+        params: { slug: params.slug },
+      }
+    );
+    article = response.data.article;
+
+    if (!article) {
+      return (
+        <p className="text-center text-3xl flex justify-center items-center h-screen">
+          404 PAGE NOT FOUND
+        </p>
+      );
     }
-  }
-
-  // Handle the case where the post doesn't exist
-  if (!post || !post.title) {
+  } catch (error) {
+    console.error("Error fetching article:", error);
     return (
       <p className="text-center text-3xl flex justify-center items-center h-screen">
-        404 PAGE NOT FOUND
+        There was a problem fetching the article. Please try again later.
       </p>
     );
   }
@@ -87,12 +108,10 @@ const Page = async ({ params }) => {
     <>
       <div className="bg-gray-100 py-5 px-5 md:px-12 lg:px-28">
         <div className="flex justify-between items-center">
-          {/* Logo */}
           <Link
             href="/"
             className="text-lg md:text-2xl font-medium text-black font-serif tracking-widest uppercase 
-            hover:cursor-pointer underline underline-offset-4
-            decoration-4 decoration-dotted"
+            hover:cursor-pointer underline underline-offset-4 decoration-4 decoration-dotted"
           >
             Patnaites News
           </Link>
@@ -104,57 +123,53 @@ const Page = async ({ params }) => {
           </Link>
         </div>
 
-        {/* Page Title */}
-        <div className="text-center my-24">
+        <div className="text-center my-10 md:my-24">
           <h1 className="text-2xl sm:text-5xl font-semibold max-w-[800px] mx-auto">
-            {post.title}
+            {article.title}
           </h1>
-          <p className="mt-5 md:mt-10 max-w-[740px] mx-auto text-xs sm:text-base">
-            - {post.author}
+          <p className="mt-2 md:mt-10 max-w-[740px] mx-auto text-xs sm:text-base">
+            - {article.author}
           </p>
         </div>
       </div>
 
-      {/* Page Image */}
-      <div className="mx-5 max-w-[800px] md:mx-auto mt-[-80px] mb-10">
+      <div className="mx-5 max-w-[800px] md:mx-auto mt-[-50px] md:mt-[-80px] mb-10">
         <Image
-          className="rounded-md shadow-md border-4 border-white"
-          src={post.image}
-          alt={post.title || "image"}
+          className="w-full h-[15rem] md:h-[20rem] lg:h-[28rem] rounded-md shadow-md border-4 border-white"
+          src={article.image}
+          alt={article.title || "image"}
           width={1280}
           height={720}
         />
         <div className="flex justify-between items-center my-4 md:my-8">
           <p className="px-1 inline-block bg-black text-white text-sm md:text-base">
-            {post.category}
+            {article.category}
           </p>
           <span className="text-sm md:text-base">
-            {moment(post.date).fromNow()}
+            {moment(article.updatedAt).fromNow()}
           </span>
         </div>
-        <p>{post.description}</p>
-        {/* Placeholder content */}
-        <h3 className="my-5 text-[18px] font-semibold">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum, at!
-        </h3>
-        <p className="my-3">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum, at!
-          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Atque
-        </p>
-        <p className="my-3">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum, at!
-          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Atque
-        </p>
-
-        {/* Social sharing */}
-        <div className="my-24">
-          <div className="font-semibold my-4">
-            Share this news on your social media.
-            <div className="flex">
-              <Image src={assets.facebook_icon} alt="facebook" width={50} />
-              <Image src={assets.twitter_icon} alt="twitter" width={50} />
-              <Image src={assets.googleplus_icon} alt="googleplus" width={50} />
-            </div>
+        <div>{parse(article.description)}</div>
+      </div>
+      <div className="my-10 md:my-20">
+        <div className="font-semibold my-4">
+          Share this news on your social media.
+          <div className="flex">
+            <Image
+              src={assets.facebook_icon}
+              alt="Share on Facebook"
+              width={50}
+            />
+            <Image
+              src={assets.twitter_icon}
+              alt="Share on Twitter"
+              width={50}
+            />
+            <Image
+              src={assets.googleplus_icon}
+              alt="Share on Google Plus"
+              width={50}
+            />
           </div>
         </div>
       </div>

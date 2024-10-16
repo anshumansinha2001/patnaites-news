@@ -1,16 +1,29 @@
-import { blog_data } from "@/assets/assets";
 import NewsCard from "./NewsCard";
 import { useEffect, useState } from "react";
+import axios from "axios";
 
 const NewsList = () => {
   const [menu, setMenu] = useState("All");
   const [isSticky, setIsSticky] = useState(false);
+  const [aticles, setArticles] = useState([]);
+
+  const fetchArticles = async () => {
+    try {
+      const response = await axios.get("/api/article");
+      setArticles(response.data.articles);
+    } catch (error) {
+      console.error("Error fetching articles:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchArticles();
+  }, []);
 
   // Extract unique categories from blog_data
-  // TODO: Add categories from API
   const categories = [
     "All",
-    ...new Set(blog_data.map((blog) => blog.category)),
+    ...new Set(aticles.map((article) => article.category)),
   ];
 
   // Adding an effect to track scroll position
@@ -64,14 +77,16 @@ const NewsList = () => {
 
       {/* for news cards */}
       <div className="flex flex-wrap justify-around gap-1 gap-y-10 mb-16 xl:mx-24">
-        {blog_data.filter((blog) =>
-          menu === "All" ? true : blog.category === menu
+        {aticles.filter((article) =>
+          menu === "All" ? true : article.category === menu
         ).length === 0 ? (
           <h3 className="text-center text-gray-500">No news found!</h3>
         ) : (
-          blog_data
-            .filter((blog) => (menu === "All" ? true : blog.category === menu))
-            .map((blog) => <NewsCard key={blog.id} {...blog} />)
+          aticles
+            .filter((article) =>
+              menu === "All" ? true : article.category === menu
+            )
+            .map((article) => <NewsCard key={article.id} {...article} />)
         )}
       </div>
     </div>

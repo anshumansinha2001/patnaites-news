@@ -3,8 +3,9 @@ import moment from "moment";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import parse from "html-react-parser";
 
-const NewsCard = ({ slug, id, image, title, description, category, date }) => {
+const NewsCard = ({ slug, image, title, description, category, updatedAt }) => {
   return (
     <div className="max-w-[330px] sm:max-w-[300px] bg-white border border-black hover:shadow-[-7px_7px_0px_#ff0000] rounded-lg overflow-hidden">
       <Link
@@ -16,14 +17,14 @@ const NewsCard = ({ slug, id, image, title, description, category, date }) => {
           alt={title || "image"}
           width={400}
           height={400}
-          className="border-b border-black transform transition-transform duration-300 hover:scale-105 hover:cursor-pointer"
+          className="w-full h-[12rem] object-cover border-b border-black transform transition-transform duration-300 hover:scale-105 hover:cursor-pointer"
         />
       </Link>
       <div className="flex justify-between items-center mt-5 mx-5">
         <p className="px-1 inline-block bg-[#ff0000] text-white text-sm">
           {category}
         </p>
-        <span className="text-xs">{moment(date).fromNow()}</span>
+        <span className="text-xs">{moment(updatedAt).fromNow()}</span>
       </div>
 
       <div className="p-5">
@@ -31,7 +32,7 @@ const NewsCard = ({ slug, id, image, title, description, category, date }) => {
           {title}
         </h5>
         <p className="mb-3 text-sm tracking-tight text-grey-700">
-          {description}
+          {parse(description.slice(0, 150).concat("..."))}
         </p>
         <Link
           href={`/${category.toLowerCase()}/${slug}`}
