@@ -4,6 +4,11 @@ import Link from "next/link";
 import React from "react";
 
 const Sidebar = () => {
+  function handleLogout() {
+    localStorage.clear();
+    window.location.reload();
+  }
+
   return (
     <div className="flex flex-col bg-slate-100">
       <div className="text-center py-3 border border-black">
@@ -39,6 +44,12 @@ const Sidebar = () => {
             <Image src={assets.email_icon} alt="email_icon" width={28} />
             <p>Subscribers</p>
           </Link>
+          <button
+            onClick={handleLogout}
+            className="flex items-center justify-center border border-black gap-3 font-medium px-3 py-2 bg-white shadow-[-5px_5px_0px_#ff0000]"
+          >
+            <p>Log Out</p>
+          </button>
         </div>
       </div>
     </div>

@@ -10,8 +10,8 @@ import {
   WhatsappShareButton,
 } from "react-share";
 
-const SocialShare = () => {
-  const shareUrl = window.location.href;
+const SocialShare = ({ url }) => {
+  const shareUrl = url;
 
   const handleShare = () => {
     if (navigator.share) {

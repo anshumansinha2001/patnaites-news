@@ -104,6 +104,7 @@ const Page = async ({ params }) => {
       </p>
     );
   }
+  const shareUrl = `${process.env.NEXT_PUBLIC_DOMAIN}/${article.category}/${article.slug}`;
 
   const formatDate = moment(article.updatedAt).format("MMMM Do YYYY");
 
@@ -140,7 +141,7 @@ const Page = async ({ params }) => {
 
       <div className="mx-5 max-w-[800px] md:mx-auto mt-[-50px] md:mt-[-80px] mb-10">
         <Image
-          className="w-full h-[15rem] md:h-[20rem] lg:h-[28rem] rounded-md shadow-md border-4 border-white"
+          className="w-full h-[15] sm:h-[18rem] md:h-[20rem] lg:h-[28rem] rounded-md shadow-md border-4 border-white"
           src={article.image}
           alt={article.title || "image"}
           width={1280}
@@ -152,7 +153,7 @@ const Page = async ({ params }) => {
           </p>
 
           <div className="flex justify-end ">
-            <SocialShare />
+            <SocialShare url={shareUrl} />
           </div>
         </div>
 

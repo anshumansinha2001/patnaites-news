@@ -1,9 +1,21 @@
+"use client";
 import Sidebar from "@/components/AdminComponents/Sidebar";
-
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+
 export default function AdminLayout({ children }) {
+  const router = useRouter();
+
+  useEffect(() => {
+    // Check if the user is authenticated
+    const isAuthenticated = localStorage.getItem("isAuthenticated");
+    if (isAuthenticated !== "true") {
+      router.push("/admin-login");
+    }
+  }, [router]);
   return (
     <>
       <div className="flex">

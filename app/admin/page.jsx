@@ -1,7 +1,12 @@
-import React from "react";
+// pages/admin.js
+"use client";
 
-const page = () => {
-  return <div>page</div>;
-};
-
-export default page;
+export default function Admin() {
+  return (
+    <div>
+      <p className="text-center text-3xl flex justify-center items-center h-screen">
+        Welcome to the Admin Dashboard
+      </p>
+    </div>
+  );
+}
