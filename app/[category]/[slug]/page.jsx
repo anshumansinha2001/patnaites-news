@@ -1,4 +1,3 @@
-import { assets } from "@/assets/assets";
 import Footer from "@/components/Footer";
 import axios from "axios";
 import moment from "moment";
@@ -6,6 +5,8 @@ import Image from "next/image";
 import Link from "next/link";
 import parse from "html-react-parser";
 import SocialShare from "@/components/SocialShare";
+import PageNotFound from "@/components/PageNotFound";
+import ReportBtn from "@/components/ReportBtn";
 
 export async function generateMetadata({ params }) {
   // Fetch article data using the slug for metadata generation
@@ -90,11 +91,7 @@ const Page = async ({ params }) => {
     article = response.data.article;
 
     if (!article) {
-      return (
-        <p className="text-center text-3xl flex justify-center items-center h-screen">
-          404 PAGE NOT FOUND
-        </p>
-      );
+      return <PageNotFound />;
     }
   } catch (error) {
     console.error("Error fetching article:", error);
@@ -119,12 +116,7 @@ const Page = async ({ params }) => {
           >
             Patnaites News
           </Link>
-          <Link
-            href="/report"
-            className="flex items-center gap-2 font-medium py-1 px-3 sm:py-3 sm:px-6 border border-black border-solid shadow-[-7px_7px_0px_#000000] text-xs sm:text-base active:bg-[#ff0000] active:text-white"
-          >
-            Report <Image src={assets.arrow} alt="arrow" />
-          </Link>
+          <ReportBtn slug={article.slug} />
         </div>
 
         <div className="text-center my-10 md:my-24">

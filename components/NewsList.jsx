@@ -76,11 +76,14 @@ const NewsList = () => {
       </div>
 
       {/* for news cards */}
-      <div className="flex flex-wrap justify-around gap-1 gap-y-10 mb-16 xl:mx-24">
+      <div className="flex flex-wrap justify-around gap-1 gap-y-10 mb-16 xl:mx-24 min-h-[300px]">
         {aticles.filter((article) =>
           menu === "All" ? true : article.category === menu
         ).length === 0 ? (
-          <h3 className="text-center text-gray-500">No news found!</h3>
+          <div className="flex flex-col gap-2 justify-center items-center">
+            <p className="loading-spinner"></p>
+            <p>Loading...</p>
+          </div>
         ) : (
           aticles
             .filter((article) =>

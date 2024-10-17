@@ -46,10 +46,14 @@ const Header = () => {
         >
           Patnaites News
         </Link>
-        {/* Get Started Button */}
-        <button className="flex items-center gap-2 font-medium py-1 px-3 sm:py-3 sm:px-6 border border-black border-solid shadow-[-7px_7px_0px_#ff0000] text-xs sm:text-base active:bg-black active:text-white">
-          Get Started <Image src={assets.arrow} alt="arrow" />
-        </button>
+
+        {/* Contact Us Link */}
+        <Link
+          href="/contact-us"
+          className="flex items-center gap-2 font-medium py-1 px-3 sm:py-3 sm:px-6 border border-black border-solid shadow-[-7px_7px_0px_#ff0000] text-xs sm:text-base active:bg-black active:text-white"
+        >
+          Contact Us <Image src={assets.arrow} alt="arrow" />
+        </Link>
       </div>
       <div className="text-center my-8">
         <h1 className="text-3xl sm:text-5xl font-medium">Latest News</h1>
