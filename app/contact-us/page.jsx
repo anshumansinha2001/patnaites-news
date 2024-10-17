@@ -21,7 +21,7 @@ const Contact = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50 p-6">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100 p-6">
       <h1 className="text-3xl font-bold mb-6 text-center">Contact Us</h1>
       <p className="text-lg text-center mb-6">
         At Patnaites News, we keep you updated! Reach out to us for brand
@@ -29,7 +29,7 @@ const Contact = () => {
       </p>
       <form
         onSubmit={handleSubmit}
-        className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 w-full max-w-lg"
+        className="bg-white shadow-lg rounded-lg px-8 pt-6 pb-8 mb-4 w-full max-w-lg"
       >
         <div className="mb-4">
           <label
@@ -92,14 +92,9 @@ const Contact = () => {
           >
             Send Message
           </button>
-          <button>
-            <Link
-              href="/"
-              className="mt-4 text-center bg-black hover:bg-gray-700 text-white font-bold py-2 px-4 rounded"
-            >
-              Return to Home
-            </Link>
-          </button>
+          <div className="bg-black hover:bg-gray-700 text-white font-bold  py-2 px-4 rounded">
+            <Link href="/">Return to Home</Link>
+          </div>
         </div>
       </form>
       <p className="text-center text-gray-600 mt-4">

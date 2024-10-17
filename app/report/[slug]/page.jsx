@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import axios from "axios";
 import Link from "next/link";
+import { toast } from "react-toastify";
 
 const Report = ({ params }) => {
   const [article, setArticle] = useState(null);
@@ -40,17 +41,28 @@ const Report = ({ params }) => {
     e.preventDefault();
     // Logic to submit the report to your backend
     try {
-      await fetch(`${process.env.NEXT_PUBLIC_DOMAIN}/api/report`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          articleId,
-          reason,
-          description,
-        }),
-      });
+      const formData = new FormData();
+      formData.append("reason", reason);
+      formData.append("description", description);
+      formData.append("slug", params.slug);
+
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_DOMAIN}/api/report`,
+        {
+          formData,
+        }
+      );
+
+      if (response.data.success) {
+        toast.success("Report submitted successfully");
+        console.log("Report submitted successfully");
+      }
+
+      if (response.data.error) {
+        toast.error(response.data.error || "Error submitting report");
+        console.error("Error submitting report:", response.data.error);
+      }
+
       setSuccess(true);
     } catch (error) {
       console.error("Error submitting report:", error);
@@ -66,8 +78,8 @@ const Report = ({ params }) => {
   }
 
   return (
-    <div className="h-screen flex justify-center items-center">
-      <div className="max-w-3xl mx-auto p-5 bg-white shadow-lg rounded-md">
+    <div className="h-screen flex justify-center items-center bg-gray-100 ">
+      <div className="max-w-3xl mx-auto p-5 shadow-lg bg-white rounded-lg">
         <h1 className="text-3xl font-bold mb-4">Report an Issue</h1>
         <div className="flex flex-col md:flex-row items-center justify-center my-4 gap-4">
           <Image
