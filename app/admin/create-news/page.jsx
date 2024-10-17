@@ -170,6 +170,7 @@ const Page = () => {
           <option>Sports</option>
           <option>International</option>
           <option>Finance</option>
+          <option>Crime</option>
         </select>
 
         {/* Author */}
