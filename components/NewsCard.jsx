@@ -3,7 +3,6 @@ import moment from "moment";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-import parse from "html-react-parser";
 
 const NewsCard = ({ slug, image, title, description, category, updatedAt }) => {
   return (
@@ -32,7 +31,10 @@ const NewsCard = ({ slug, image, title, description, category, updatedAt }) => {
           {title}
         </h5>
         <p className="mb-3 text-sm tracking-tight text-grey-700">
-          {parse(description.slice(0, 150).concat("..."))}
+          {description
+            .replace(/(<([^>]+)>)/gi, "")
+            .slice(0, 150)
+            .concat("...")}
         </p>
         <Link
           href={`/${category.toLowerCase()}/${slug}`}

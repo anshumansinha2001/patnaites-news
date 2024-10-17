@@ -5,6 +5,7 @@ import moment from "moment";
 import Image from "next/image";
 import Link from "next/link";
 import parse from "html-react-parser";
+import SocialShare from "@/components/SocialShare";
 
 export async function generateMetadata({ params }) {
   // Fetch article data using the slug for metadata generation
@@ -32,10 +33,10 @@ export async function generateMetadata({ params }) {
   // Construct metadata for the found article
   const metaTitle = article.title || "Patnaites News";
   const metaDescription =
-    article.description ||
+    article.description.replace(/(<([^>]+)>)/gi, "") ||
     "Stay updated with the latest news and events in Patna.";
   const imageUrl = article.image || "/favicon.ico";
-  const canonicalUrl = `https://patnaitesnews.vercel.app/${
+  const canonicalUrl = `${process.env.NEXT_PUBLIC_DOMAIN}/${
     article.category || "uncategorized"
   }/${article.slug}`;
 
@@ -104,6 +105,8 @@ const Page = async ({ params }) => {
     );
   }
 
+  const formatDate = moment(article.updatedAt).format("MMMM Do YYYY");
+
   return (
     <>
       <div className="bg-gray-100 py-5 px-5 md:px-12 lg:px-28">
@@ -127,9 +130,11 @@ const Page = async ({ params }) => {
           <h1 className="text-2xl sm:text-5xl font-semibold max-w-[800px] mx-auto">
             {article.title}
           </h1>
-          <p className="mt-2 md:mt-10 max-w-[740px] mx-auto text-xs sm:text-base">
-            - {article.author}
-          </p>
+          <div className="mt-2 md:mt-10 max-w-[740px] mx-auto text-xs sm:text-base">
+            <span>- {article.author}</span>
+            <span> | </span>
+            <span>{formatDate}</span>
+          </div>
         </div>
       </div>
 
@@ -145,34 +150,15 @@ const Page = async ({ params }) => {
           <p className="px-1 inline-block bg-black text-white text-sm md:text-base">
             {article.category}
           </p>
-          <span className="text-sm md:text-base">
-            {moment(article.updatedAt).fromNow()}
-          </span>
-        </div>
-        <div>{parse(article.description)}</div>
-      </div>
-      <div className="my-10 md:my-20">
-        <div className="font-semibold my-4">
-          Share this news on your social media.
-          <div className="flex">
-            <Image
-              src={assets.facebook_icon}
-              alt="Share on Facebook"
-              width={50}
-            />
-            <Image
-              src={assets.twitter_icon}
-              alt="Share on Twitter"
-              width={50}
-            />
-            <Image
-              src={assets.googleplus_icon}
-              alt="Share on Google Plus"
-              width={50}
-            />
+
+          <div className="flex justify-end ">
+            <SocialShare />
           </div>
         </div>
+
+        <div>{parse(article.description)}</div>
       </div>
+
       <Footer />
     </>
   );

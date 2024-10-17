@@ -17,11 +17,11 @@ export const metadata = {
     title: "Patnaites News",
     description:
       "A news portal for Patnaites. Get the latest updates and insights.",
-    url: "https://patnaitesnews.vercel.app",
+    url: `${process.env.NEXT_PUBLIC_DOMAIN}`,
     type: "website",
     images: [
       {
-        url: "https://patnaitesnews.vercel.app/favicon.ico",
+        url: `${process.env.NEXT_PUBLIC_DOMAIN}/favicon.ico`,
         alt: "Patnaites News Image",
       },
     ],
@@ -31,7 +31,7 @@ export const metadata = {
     site: "@your_twitter_handle",
     title: "Patnaites News",
     description: "A news portal for Patnaites.",
-    image: "https://patnaitesnews.vercel.app/favicon.ico",
+    image: `${process.env.NEXT_PUBLIC_DOMAIN}/favicon.ico`,
   },
 };
 

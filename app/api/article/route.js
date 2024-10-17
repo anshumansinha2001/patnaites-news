@@ -2,6 +2,7 @@ import connectDB from "@/lib/config/db";
 import ArticleModel from "@/lib/models/articleModel";
 import { NextResponse } from "next/server";
 import { writeFile, unlink } from "fs/promises";
+import fs from "fs/promises";
 
 const LoadDB = async () => {
   await connectDB();
@@ -106,6 +107,49 @@ export async function POST(request) {
         success: false,
         error: true,
         message: error.message || "Failed to insert article",
+      },
+      { status: 500 }
+    );
+  }
+}
+
+// API Endpoint for deleting an article
+export async function DELETE(request) {
+  const id = request.nextUrl.searchParams.get("id");
+  try {
+    const article = await ArticleModel.findById(id);
+
+    if (!article) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: true,
+          message: "Article not found",
+        },
+        { status: 404 }
+      );
+    }
+
+    // Try to delete the image file
+    try {
+      await fs.unlink(`./public/${article.image}`);
+    } catch (err) {
+      console.error("Error deleting image file:", err.message);
+    }
+
+    // Delete the article after the image is handled
+    await ArticleModel.findByIdAndDelete(id);
+    return NextResponse.json({
+      success: true,
+      message: "Article deleted successfully",
+    });
+  } catch (error) {
+    console.error("Error deleting article:", error.message);
+    return NextResponse.json(
+      {
+        success: false,
+        error: true,
+        message: error.message || "Failed to delete article",
       },
       { status: 500 }
     );

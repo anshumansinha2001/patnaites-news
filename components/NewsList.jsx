@@ -86,7 +86,7 @@ const NewsList = () => {
             .filter((article) =>
               menu === "All" ? true : article.category === menu
             )
-            .map((article) => <NewsCard key={article.id} {...article} />)
+            .map((article) => <NewsCard key={article._id} {...article} />)
         )}
       </div>
     </div>
